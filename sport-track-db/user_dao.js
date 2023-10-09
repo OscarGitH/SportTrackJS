@@ -1,8 +1,9 @@
 const sqlite3 = require('sqlite3').verbose();
 const db = require('./sqlite_connection');
+
 class user_dao {
-    // Méthode pour insérer un nouvel utilisateur
     static insert(user, callback) {
+        this.resetAutoIncrement();
         const sql = db.prepare("INSERT INTO User (userId, lastName, firstName, birthDate, gender, height, weight, email, password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         sql.run(
             user.userId,
@@ -26,12 +27,10 @@ class user_dao {
             }
         );
         sql.finalize();
-    };
+    }
 
-/*
-    // Méthode pour mettre à jour un utilisateur
     static update(userId, user) {
-        const sql = 'UPDATE User SET lastName = ?, firstName = ?, birthDate = ?, gender = ?, height = ?, weight = ?, email = ?, password = ? WHERE userId = ?';
+        const sql = "UPDATE User SET lastName = ?, firstName = ?, birthDate = ?, gender = ?, height = ?, weight = ?, email = ?, password = ? WHERE userId = ?";
         const params = [
             user.lastName,
             user.firstName,
@@ -55,12 +54,11 @@ class user_dao {
         });
     }
 
-    // Méthode pour supprimer un utilisateur par son ID
     static delete(userId) {
-        const sql = `DELETE FROM User WHERE userId = ?`;
+        const sql = "DELETE FROM User WHERE userId = ?";
 
         return new Promise((resolve, reject) => {
-            db.run(sql, [], function (err) {
+            db.run(sql, [userId], function (err) {
                 if (err) {
                     reject(err.message);
                 } else {
@@ -70,7 +68,6 @@ class user_dao {
         });
     }
 
-    // Méthode pour vider la table User
     static deleteAll() {
         const sql = `DELETE FROM User`;
 
@@ -85,9 +82,8 @@ class user_dao {
         });
     }
 
-    // Méthode pour reset l'autoincrement de la table User
     static resetAutoIncrement() {
-        const sql = `DELETE FROM sqlite_sequence WHERE name = 'User'`;
+        const sql = "DELETE FROM sqlite_sequence WHERE name = 'User'";
 
         return new Promise((resolve, reject) => {
             db.run(sql, [], function (err) {
@@ -100,12 +96,11 @@ class user_dao {
         });
     }
 
-    // Méthode pour trouver un utilisateur par son ID
     static findByKey(userId) {
         const sql = `SELECT * FROM User WHERE userId = ?`;
 
         return new Promise((resolve, reject) => {
-            db.get(sql, userId, (err, row) => {
+            db.get(sql, [userId], (err, row) => {
                 if (err) {
                     reject(err.message);
                 } else {
@@ -115,7 +110,6 @@ class user_dao {
         });
     }
 
-    // Méthode pour trouver un utilisateur par son email
     static findByEmail(email) {
         const sql = `SELECT * FROM User WHERE email = ?`;
 
@@ -130,7 +124,6 @@ class user_dao {
         });
     }
 
-    // Méthode pour trouver tous les utilisateurs
     static findAll() {
         const sql = `SELECT * FROM User`;
 
@@ -143,7 +136,7 @@ class user_dao {
                 }
             });
         });
-    }*/
+    }
 }
 
 var dao = new user_dao();
