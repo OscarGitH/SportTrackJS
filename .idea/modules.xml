@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/SportTrackJS.iml" filepath="$PROJECT_DIR$/.idea/SportTrackJS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-track-db/extensions/com.intellij.database/com.intellij.database.iml" filepath="$PROJECT_DIR$/sport-track-db/extensions/com.intellij.database/com.intellij.database.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sport-track-db/extensions/com.intellij.database/data/data.iml" filepath="$PROJECT_DIR$/sport-track-db/extensions/com.intellij.database/data/data.iml" />
+    </modules>
+  </component>
+</project>
