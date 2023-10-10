@@ -54,13 +54,14 @@ class user_dao {
         });
     }
 
-    static delete(userId) {
+    static delete(userId, callback) {
         const sql = "DELETE FROM User WHERE userId = ?";
 
         return new Promise((resolve, reject) => {
             db.run(sql, [userId], function (err) {
                 if (err) {
-                    reject(err.message);
+                    console.error("Erreur lors de la suppression :", err.message);
+                    callback(err);
                 } else {
                     resolve(`User deleted: ${userId}`);
                 }
