@@ -1,7 +1,7 @@
+// Importer les modules nécessaires
 var db = require('./sport-track-db').db;
 var user_dao = require('./sport-track-db').user_dao;
 var activity_dao = require('./sport-track-db').activity_dao;
-var activity_entry_dao = require('./sport-track-db').activity_entry_dao;
 
 // Nettoyer la base de données avant les tests
 activity_dao.deleteAll();
@@ -10,7 +10,7 @@ console.log('Base de données nettoyée.');
 
 async function runTests() {
     try {
-        // Cas normal : Insertion d'un utilisateur
+        // Cas de test pour l'insertion d'un utilisateur
         const newUser = {
             lastName: 'Doe',
             firstName: 'John',
@@ -25,7 +25,7 @@ async function runTests() {
         const userId = await user_dao.insert(newUser);
         console.log('Nouvel utilisateur ajouté avec succès, ID:', userId);
 
-        // Cas de mise à jour d'un utilisateur
+        // Cas de test pour la mise à jour d'un utilisateur
         const updatedUser = {
             lastName: 'Smith',
             firstName: 'Jane',
@@ -40,56 +40,56 @@ async function runTests() {
         const updateUserMessage = await user_dao.update(1, updatedUser);
         console.log(updateUserMessage);
 
-        // Cas de recherche d'utilisateur par ID
+        // Cas de test pour la recherche d'utilisateur par ID
         const foundUser = await user_dao.findByKey(1);
         console.log('Utilisateur trouvé par ID:', foundUser);
 
+        // Données de test pour l'insertion d'une activité
+        const testData = {
+            userId: 1,
+            date: '2023-10-09',
+            description: 'Test Activity',
+            time: '01:30:00',
+            distance: '10.5',
+            averageSpeed: '7.0',
+            maxSpeed: '12.0',
+            totalAltitude: '250',
+            averageHeartRate: 80,
+            maxHeartRate: 160,
+            minHeartRate: 60
+        };
 
-         const testData = {
-                userId: 1,
-                date: '2023-10-09',
-                description: 'Test Activity',
-                time: '01:30:00',
-                distance: '10.5',
-                averageSpeed: '7.0',
-                maxSpeed: '12.0',
-                totalAltitude: '250',
-                averageHeartRate: 80,
-                maxHeartRate: 160,
-                minHeartRate: 60
-            };
+        // Cas de test pour l'insertion d'une activité
+        await activity_dao.insert(testData);
+        console.log('Nouvelle activité ajoutée avec succès, ID:');
 
-            // Cas normal : Insertion d'une activité
-            await activity_dao.insert(testData);
-            console.log('Nouvelle activité ajoutée avec succès, ID:');
+        // Cas de test pour la mise à jour d'une activité
+        const updatedActivity = {
+            date: '2023-09-10',
+            description: 'Test Activity update',
+            time: '02:29:00',
+            distance: '10.5',
+            averageSpeed: '7.0',
+            maxSpeed: '12.0',
+            totalAltitude: '250',
+            averageHeartRate: 80,
+            maxHeartRate: 160,
+            minHeartRate: 60
+        };
 
-            // Cas de mise à jour d'une activité
-            const updatedActivity = {
-                date: '2023-09-10',
-                description: 'Test Activity update',
-                time: '02:29:00',
-                distance: '10.5',
-                averageSpeed: '7.0',
-                maxSpeed: '12.0',
-                totalAltitude: '250',
-                averageHeartRate: 80,
-                maxHeartRate: 160,
-                minHeartRate: 60
-            };
+        const updateActiMessage = await activity_dao.update(1, updatedActivity);
+        console.log(updateActiMessage);
 
-            const updateActiMessage = await activity_dao.update(1, updatedActivity);
-            console.log(updateActiMessage);
+        // Cas de test pour la recherche d'activité par ID
+        await activity_dao.find(1);
+        console.log('Activité trouvée par ID:');
 
-            // Cas de recherche d'activité par ID
-            await activity_dao.find(1);
-            console.log('Activité trouvée par ID:');
+        // Cas de test pour la suppression d'un utilisateur
+        const deleteMessage = await user_dao.delete(1);
+        console.log(deleteMessage);
 
-            // Cas pour suppression d'un utilisateur
-            const deleteMessage = await user_dao.delete(1);
-            console.log(deleteMessage);
-
-            // Cas pour suppression d'une activité
-            await activity_dao.delete(1);
+        // Cas de test pour la suppression d'une activité
+        await activity_dao.delete(1);
 
         // Fermer la connexion à la base de données après les tests
         db.close((err) => {
@@ -100,9 +100,10 @@ async function runTests() {
             }
         });
 
-        } catch (err) {
-            console.error('Une erreur s\'est produite :', err);
-        }
+    } catch (err) {
+        console.error('Une erreur s\'est produite :', err);
+    }
 }
 
+// Exécuter les tests
 runTests();

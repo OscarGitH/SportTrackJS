@@ -1,0 +1,30 @@
+doctype html
+html
+    head
+        title= title
+        // link(rel='stylesheet', href='/stylesheets/style.css')
+    body
+        table(border='1')
+            thead
+                tr
+                    th User ID
+                    th Last Name
+                    th First Name
+                    th birthDate
+                    th gender 
+                    th height
+                    th weight
+                    th email
+                    th password
+            tbody
+                each val in data
+                    tr
+                        td= val.userId
+                        td= val.lastName
+                        td= val.firstName
+                        td= val.birthDate
+                        td= val.gender
+                        td= val.height
+                        td= val.weight
+                        td= val.email
+                        td= val.password

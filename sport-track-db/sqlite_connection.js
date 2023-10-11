@@ -1,8 +1,8 @@
 const sqlite3 = require('sqlite3').verbose();
 
 // Chemin vers la base de données SQLite
-const dbPath = './sporttrack_db.db';
-// const dbPath = 'C:\\Users\\pavoi\\iCloudDrive\\PARA\\Projets\\IUT\\R3.01 - Développement web\\SportTrackJS\\sport-track-db.db';
+// const dbPath = './sport-track-db';
+const dbPath = 'C:\\Users\\pavoi\\iCloudDrive\\PARA\\Projets\\IUT\\R3.01 - Développement web\\SportTrackJS\\sport-track-db\\sporttrack_db.db';
 
 // Créer une nouvelle instance de la base de données SQLite
 const db = new sqlite3.Database(dbPath, (err) => {

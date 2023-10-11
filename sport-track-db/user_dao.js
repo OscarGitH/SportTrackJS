@@ -126,9 +126,9 @@ class user_dao {
     }
 
     static findAll() {
-        const sql = `SELECT * FROM User`;
-
         return new Promise((resolve, reject) => {
+            const sql = `SELECT * FROM User`;
+    
             db.all(sql, [], (err, rows) => {
                 if (err) {
                     reject(err.message);
@@ -137,7 +137,7 @@ class user_dao {
                 }
             });
         });
-    }
+    }    
 }
 
 var dao = new user_dao();
