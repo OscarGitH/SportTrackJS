@@ -29,7 +29,7 @@ class user_dao {
         sql.finalize();
     }
 
-    static update(userId, user) {
+    static update(user) {
         const sql = "UPDATE User SET lastName = ?, firstName = ?, birthDate = ?, gender = ?, height = ?, weight = ?, email = ?, password = ? WHERE userId = ?";
         const params = [
             user.lastName,
@@ -40,19 +40,20 @@ class user_dao {
             user.weight,
             user.email,
             user.password,
-            userId
+            user.userId
         ];
-
+    
         return new Promise((resolve, reject) => {
             db.run(sql, params, function (err) {
                 if (err) {
                     reject(err.message);
                 } else {
-                    resolve(`User updated: ${userId}`);
+                    resolve(`User updated: ${user.userId}`);
                 }
             });
         });
     }
+       
 
     static delete(userId, callback) {
         const sql = "DELETE FROM User WHERE userId = ?";

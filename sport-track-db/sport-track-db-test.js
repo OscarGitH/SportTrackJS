@@ -1,109 +1,113 @@
-// Importer les modules nécessaires
-var db = require('./sport-track-db').db;
-var user_dao = require('./sport-track-db').user_dao;
-var activity_dao = require('./sport-track-db').activity_dao;
+const db = require('./sport-track-db').db;
+const user_dao = require('./sport-track-db').user_dao;
 
-// Nettoyer la base de données avant les tests
-activity_dao.deleteAll();
-user_dao.deleteAll();
-console.log('Base de données nettoyée.');
+async function clearDatabase() {
+  try {
+    await user_dao.deleteAll();
+    console.log('Tous les utilisateurs ont été supprimés avec succès');
+  } catch (err) {
+    console.error('Erreur lors de la suppression de tous les utilisateurs :', err);
+    throw err;
+  }
+}
 
-async function runTests() {
+async function resetAutoIncrement() {
+  try {
+    await user_dao.resetAutoIncrement();
+    console.log('Réinitialisation de l\'auto-incrément effectuée avec succès');
+  } catch (err) {
+    console.error('Erreur lors de la réinitialisation de l\'auto-incrément :', err);
+    throw err;
+  }
+}
+
+async function insertUser(newUser) {
+  try {
+    await user_dao.insert(newUser);
+    console.log('Nouvel utilisateur ajouté avec succès');
+  } catch (err) {
+    console.error('Erreur lors de l\'ajout du nouvel utilisateur :', err);
+    throw err;
+  }
+}
+
+async function updateUser(user) {
     try {
-        // Cas de test pour l'insertion d'un utilisateur
-        const newUser = {
-            lastName: 'Doe',
-            firstName: 'John',
-            birthDate: '1990-01-01',
-            gender: 'M',
-            height: 180.0,
-            weight: 75.0,
-            email: 'janesmith1@example.com',
-            password: 'password123'
-        };
-
-        const userId = await user_dao.insert(newUser);
-        console.log('Nouvel utilisateur ajouté avec succès, ID:', userId);
-
-        // Cas de test pour la mise à jour d'un utilisateur
-        const updatedUser = {
-            lastName: 'Smith',
-            firstName: 'Jane',
-            birthDate: '1985-05-15',
-            gender: 'F',
-            height: 165.5,
-            weight: 60.0,
-            email: 'janesmith1@example.com',
-            password: 'newpassword'
-        };
-
-        const updateUserMessage = await user_dao.update(1, updatedUser);
-        console.log(updateUserMessage);
-
-        // Cas de test pour la recherche d'utilisateur par ID
-        const foundUser = await user_dao.findByKey(1);
-        console.log('Utilisateur trouvé par ID:', foundUser);
-
-        // Données de test pour l'insertion d'une activité
-        const testData = {
-            userId: 1,
-            date: '2023-10-09',
-            description: 'Test Activity',
-            time: '01:30:00',
-            distance: '10.5',
-            averageSpeed: '7.0',
-            maxSpeed: '12.0',
-            totalAltitude: '250',
-            averageHeartRate: 80,
-            maxHeartRate: 160,
-            minHeartRate: 60
-        };
-
-        // Cas de test pour l'insertion d'une activité
-        await activity_dao.insert(testData);
-        console.log('Nouvelle activité ajoutée avec succès, ID:');
-
-        // Cas de test pour la mise à jour d'une activité
-        const updatedActivity = {
-            date: '2023-09-10',
-            description: 'Test Activity update',
-            time: '02:29:00',
-            distance: '10.5',
-            averageSpeed: '7.0',
-            maxSpeed: '12.0',
-            totalAltitude: '250',
-            averageHeartRate: 80,
-            maxHeartRate: 160,
-            minHeartRate: 60
-        };
-
-        const updateActiMessage = await activity_dao.update(1, updatedActivity);
-        console.log(updateActiMessage);
-
-        // Cas de test pour la recherche d'activité par ID
-        await activity_dao.find(1);
-        console.log('Activité trouvée par ID:');
-
-        // Cas de test pour la suppression d'un utilisateur
-        const deleteMessage = await user_dao.delete(1);
-        console.log(deleteMessage);
-
-        // Cas de test pour la suppression d'une activité
-        await activity_dao.delete(1);
-
-        // Fermer la connexion à la base de données après les tests
-        db.close((err) => {
-            if (err) {
-                console.error('Erreur lors de la fermeture de la base de données :', err.message);
-            } else {
-                console.log('Connexion à la base de données SQLite fermée.');
-            }
-        });
-
+        await user_dao.update(user);
+        console.log('Utilisateur mis à jour avec succès');
     } catch (err) {
-        console.error('Une erreur s\'est produite :', err);
+        console.error('Erreur lors de la mise à jour de l\'utilisateur :', err);
+        throw err;
     }
 }
 
-// Exécuter les tests
-runTests();
+async function showUser(userId) {
+    try {
+        const user = await user_dao.findByKey(userId);
+        console.log('Utilisateur ' + userId + ' :', user);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage de l\'utilisateur :', err);
+        throw err;
+    }
+    }
+
+const user1 = {
+    lastName: 'Pierre',
+    firstName: 'Noé',
+    birthDate: '2004-11-04',
+    gender: 'M',
+    height: 180,
+    weight: 75,
+    email: 'noepierre@gmail.com',
+    password: 'password123'
+};
+
+const user1Updated = {
+    userId: 1, //Id de l'utilisateur à modifier
+    lastName: 'Pierre',
+    firstName: 'Noé',
+    birthDate: '2004-11-04',
+    gender: 'M',
+    height: 180,
+    weight: 84, //Poids modifié
+    email: 'noepierremodif@gmail.com', //Email modifié
+    password: 'password123'
+}
+
+async function main() {
+  try {
+    // Connexion à la base de données SQLite
+    await clearDatabase();
+    await resetAutoIncrement();
+
+    console.log('\n----------------------------------------\n');
+
+    // Insertion d'un utilisateur valide
+    await insertUser(user1);
+    console.log('\n');
+
+    // Affichage de l'utilisateur 1
+    console.log('Affichage de l\'utilisateur 1 :');
+    await showUser(1);
+    console.log('\n');
+    
+    // mise à jour de l'utilisateur 1
+    await updateUser(user1Updated);
+    console.log('\n');
+
+    console.log('\n----------------------------------------\n');
+
+    // Fermeture de la connexion à la base de données
+    db.close((err) => {
+      if (err) {
+        console.error('Erreur lors de la fermeture de la base de données :', err.message);
+      } else {
+        console.log('Connexion à la base de données SQLite fermée.');
+      }
+    });
+  } catch (err) {
+    console.error('Une erreur est survenue :', err);
+  }
+}
+
+main();
