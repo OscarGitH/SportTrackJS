@@ -1,8 +1,16 @@
 var express = require('express');
+var session = require('express-session');
 var router = express.Router();
 var user_dao = require('../../sport-track-db/sport-track-db').user_dao;
+var socker;
+// Configuration du middleware express-session
+router.use(session({secret: 'votre-secret-secret'}));
+
+
 router.get('/', async function(req, res, next) {
-  try {
+    socker = req.session;
+
+    try {
     res.render('users');
   } catch (error) {
     console.error(error);

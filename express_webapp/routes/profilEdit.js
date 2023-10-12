@@ -1,8 +1,15 @@
 var express = require('express');
+var session = require('express-session');
 var router = express.Router();
 var user_dao = require('../../sport-track-db/sport-track-db').user_dao;
+var socker;
+// Configuration du middleware express-session
+router.use(session({secret: 'votre-secret-secret'}));
+
+
 router.get('/', async function(req, res, next) {
-  try {
+    socker = req.session;
+    try {
     res.render('profilEdit');
   } catch (error) {
     console.error(error);
@@ -14,7 +21,7 @@ router.post('/', async function(req, res, next) {
     const userData = req.body;
   
     try {
-      const sessionUserId = req.session.userId; 
+      const sessionUserId = req.session.socker ;
       // Vérification du format de l'adresse e-mail
       if (!validateEmail(userData.email)) {
         // L'adresse e-mail n'est pas au bon format
@@ -24,7 +31,7 @@ router.post('/', async function(req, res, next) {
       // Vérifiez si un utilisateur autre que l'utilisateur actuel existe déjà avec la même adresse e-mail
       const existingUser = await user_dao.findByEmail(userData.email);
   
-      if (existingUser && existingUser.userId !== sessionUserId) {
+      if (existingUser && existingUser.socker !== sessionUserId) {
         // Un utilisateur avec la même adresse e-mail existe déjà
         return res.redirect('/modif_invalid');
       }

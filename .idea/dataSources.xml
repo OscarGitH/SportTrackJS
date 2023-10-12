@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:sqlite:C:\Users\pavoi\iCloudDrive\PARA\Projets\IUT\R3.01 - Développement web\SportTrackJS\sport-track-db\sporttrack_db.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="sporttrack_db" uuid="2c56f297-c13d-435f-ad44-cfb32484b1b6">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\pavoi\Documents\PARA\Projets\IUT2\R3.01 - Développement web\SportTrackJS\sporttrack_db.db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

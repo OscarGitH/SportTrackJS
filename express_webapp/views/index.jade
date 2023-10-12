@@ -15,27 +15,14 @@ html(lang='fr')
           img(src='../img/sporttrack.png', alt='SportTrack Logo')
         if !userId
           p.explication SportTrack permet à des sportifs disposant d’une montre "cardio/gps" de pouvoir sauvegarder et gérer des données de position et de fréquence cardiaque
-          a.signuptext(href='/user_add') Créer un compte
+          a.signuptext(href='users') Créer un compte
         else
           p.explication
-            | Bienvenue, #{firstName} !
+            | Bienvenue, #{userId.firstName} !
             br
             | Accédez à votre compte pour consulter vos données ou ajouter un nouveau fichier
-          a.myaccount(href='/profilEdit') Mon compte
-
-    main
-      .conteneur
-        .conteneur
-        if !userId
-          p.explication SportTrack permet à des sportifs disposant d’une montre "cardio/gps" de pouvoir sauvegarder et gérer des données de position et de fréquence cardiaque
-          a.signuptext(href='/users') Créer un compte
-        else
-          p.explication
-            | Bienvenue, #{firstName} !
-            br
-            | Accédez à votre compte pour consulter vos données ou ajouter un nouveau fichier
-          a.myaccount(href='/profilEdit') Mon compte
+          a.myaccount(href='profilEdit') Mon compte
 
     footer
       section
-        a.apropos(href='apropos') À propos 
+        a.apropos(href='apropos') À propos

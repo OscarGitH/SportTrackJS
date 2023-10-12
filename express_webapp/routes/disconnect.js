@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var session = require('express-session');
 var user_dao = require('../../sport-track-db/sport-track-db').user_dao;
-
+var socker;
 router.get('/', function (req, res, next) {
     // Vérifiez si l'utilisateur est connecté (utilisation de la variable de session)
     if (req.session.userId) {

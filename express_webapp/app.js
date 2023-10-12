@@ -11,6 +11,7 @@ var connect = require('./routes/connect');
 var disconnect = require('./routes/disconnect');
 var profilEdit = require('./routes/profilEdit');
 var upload = require('./routes/upload');
+var apropos = require('./routes/apropos');
 
 var app = express();
 
@@ -30,19 +31,7 @@ app.use('/connect',connect);
 app.use('/disconnect',disconnect);
 app.use('/profilEdit',profilEdit);
 app.use('/upload',upload);
-
-// Configuration de la session
-app.use(session({
-  secret: 'votre_secret',
-  resave: false,
-  saveUninitialized: true
-}));
-
-app.use((req, res, next) => {
-  res.locals.userId = req.session.userId;
-  next();
-});
-
+app.use('/apropos',apropos);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
