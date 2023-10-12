@@ -294,28 +294,36 @@ async function main() {
 
     // insertion de l'utilisateur 2
     await insertUser(user2);
+    console.log('\n');
 
     // Affichage de tous les utilisateurs
     console.log('Affichage de tous les utilisateurs :');
     await showAllUsers();
+    console.log('\n');
 
     // Suppression de l'utilisateur 1
     await deleteUser(1);
+    console.log('\n');
 
     // Affichage de tous les utilisateurs
     console.log('Affichage de tous les utilisateurs :');
     await showAllUsers();
+    console.log('\n');
 
     // Suppression de tous les utilisateurs
     await deleteAllUsers();
+    console.log('\n');
 
     // Insertion des utilisateurs 1 et 2
     await insertUser(user1);
+    console.log('\n');
     await insertUser(user2);
+    console.log('\n');
 
     // Affichage de tous les utilisateurs une fois qu'ils ont été réinsérés
     console.log('Affichage de tous les utilisateurs :');
     await showAllUsers();
+    console.log('\n');
 
     // Affichage de l'utilisateur avec l'email 'noepierre@gmail'
     console.log('Affichage de l\'utilisateur avec l\'email \'noepierre@gmail.com\' :');
@@ -325,34 +333,43 @@ async function main() {
 
     // Insertion d'une activité
     await insertActivity(activity1);
+    console.log('\n');
 
     // Affichage de l'activité 1
     console.log('Affichage de l\'activité 1 :');
     await showActivity(1);
+    console.log('\n');
 
     // mise à jour de l'activité 1
     await updateActivity(1, activity1Updated);
+    console.log('\n');
 
     // insertion de l'activité 2
     await insertActivity(activity2);
+    console.log('\n');
 
     // insertion de l'activité 3
     await insertActivity(activity3);
+    console.log('\n');
 
     // Affichage des activités de l'utilisateur 1
     console.log('Affichage des activités de l\'utilisateur 1 :');
     await showActivitiesByUser(1);
+    console.log('\n');
 
     // Affichage des activités de l'utilisateur avec l'email 'noepierre@gmail.com'
     console.log('Affichage des activités de l\'utilisateur avec l\'email \'noepierre@gmail.com\' :');
     await findActivitiesByUserMail('noepierre@gmail.com');
+    console.log('\n');
 
     // Suppression de l'activité 1
     await deleteActivity(1);
+    console.log('\n');
 
     // Affichage de toutes les activités
     console.log('Affichage de toutes les activités :');
     await showAllActivities();
+    console.log('\n');
 
     // Suppression de toutes les activités
     await deleteAllActivities();
