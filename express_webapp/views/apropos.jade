@@ -21,9 +21,11 @@ html
                     a(href='users') INSCRIRE
         .about-me-container
             h2 À propos de nous :
-            p
-                | NOMS :
-                = userId.firstName
-            p
-                | PRENOMS :
-                = userId.lastName
+            if !userId
+                p
+                    | Vous n'êtes pas connecté.
+            else
+                p
+                    | NOMS : #{userId.firstName}
+                p
+                    | PRENOMS : #{userId.lastName}

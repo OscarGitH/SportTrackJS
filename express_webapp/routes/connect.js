@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const router = express.Router();
 const user_dao = require('../../sport-track-db/sport-track-db').user_dao;
-var userId =
 
 // Configuration du middleware express-session
 router.use(session({secret: 'votre-secret-secret'}));
