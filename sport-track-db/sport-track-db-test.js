@@ -1,12 +1,16 @@
 const db = require('./sport-track-db').db;
 const user_dao = require('./sport-track-db').user_dao;
+const activity_dao = require('./sport-track-db').activity_dao;
+
+// tests de la classe user_dao
 
 async function clearDatabase() {
   try {
     await user_dao.deleteAll();
-    console.log('Tous les utilisateurs ont été supprimés avec succès');
+    await activity_dao.deleteAll();
+    console.log('Tous les utilisateurs et activités ont été supprimés avec succès');
   } catch (err) {
-    console.error('Erreur lors de la suppression de tous les utilisateurs :', err);
+    console.error('Erreur lors de la suppression de tous les utilisateurs et activités :', err);
     throw err;
   }
 }
@@ -125,6 +129,145 @@ const user2 = {
   password: 'password123'
 }
 
+// tests de la classe activity_dao
+
+async function insertActivity(newActivity) {
+    try {
+        await activity_dao.insert(newActivity);
+        console.log('Nouvelle activité ajoutée avec succès');
+    } catch (err) {
+        console.error('Erreur lors de l\'ajout de la nouvelle activité :', err);
+        throw err;
+    }
+}
+
+async function updateActivity(activityId, updatedActivity) {
+  try {
+      updatedActivity.activityId = activityId;
+      await activity_dao.update(activityId, updatedActivity);
+      console.log('Activité mise à jour avec succès');
+  } catch (err) {
+      console.error('Erreur lors de la mise à jour de l\'activité :', err);
+      throw err;
+  }
+}
+
+async function deleteActivity(activityId) {
+    try {
+        await activity_dao.delete(activityId);
+        console.log('Activité supprimée avec succès');
+    } catch (err) {
+        console.error('Erreur lors de la suppression de l\'activité :', err);
+        throw err;
+    }
+}
+
+async function deleteAllActivities() {
+    try {
+        await activity_dao.deleteAll();
+        console.log('Toutes les activités ont été supprimées avec succès');
+    } catch (err) {
+        console.error('Erreur lors de la suppression de toutes les activités :', err);
+        throw err;
+    }
+}
+
+async function showActivity(activityId) {
+    try {
+        const activity = await activity_dao.find(activityId);
+        console.log('Activité ' + activityId + ' :', activity);
+    } catch (err) { 
+        console.error('Erreur lors de l\'affichage de l\'activité :', err);
+        throw err;
+    }
+}
+
+async function showAllActivities() {
+    try {
+        const activities = await activity_dao.findAll();
+        console.log('Activités :', activities);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage des activités :', err);
+        throw err;
+    }
+}
+
+async function showActivitiesByUser(userId) {
+    try {
+        const activities = await activity_dao.findByIdUser(userId);
+        console.log('Activités de l\'utilisateur ' + userId + ' :', activities);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage des activités de l\'utilisateur :', err);
+        throw err;
+    }
+}
+
+async function findActivitiesByUserMail(email) {
+    try {
+        const activities = await activity_dao.findByEmail(email);
+        console.log('Activités de l\'utilisateur ' + email + ' :', activities);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage des activités de l\'utilisateur :', err);
+        throw err;
+    }
+}
+
+const activity1 = {
+    userId: 1,
+    date: '01/01/2021',
+    description: 'Course à pied',
+    time: '01:00:00',
+    distance: 10000,
+    averageSpeed: 10,
+    maxSpeed: 12,
+    totalAltitude: 50,
+    averageHeartRate: 150,
+    maxHeartRate: 160,
+    minHeartRate: 140
+};
+
+const activity1Updated = {
+    activityId: 1, //Id de l'activité à modifier
+    userId: 1,
+    date: '01/01/2021',
+    description: 'Course à pied',
+    time: '01:00:00',
+    distance: 10030, //Distance modifiée
+    averageSpeed: 11, //Vitesse moyenne modifiée
+    maxSpeed: 12,
+    totalAltitude: 50,
+    averageHeartRate: 150,
+    maxHeartRate: 160,
+    minHeartRate: 140
+};
+
+const activity2 = {
+    userId: 1,
+    date: '02/01/2021',
+    description: 'Course à pied',
+    time: '01:00:00',
+    distance: 10000,
+    averageSpeed: 10,
+    maxSpeed: 12,
+    totalAltitude: 50,
+    averageHeartRate: 150,
+    maxHeartRate: 160,
+    minHeartRate: 140
+};
+
+const activity3 = {
+    userId: 2,
+    date: '03/01/2021',
+    description: 'Course à pied',
+    time: '01:00:00',
+    distance: 10000,
+    averageSpeed: 10,
+    maxSpeed: 12,
+    totalAltitude: 50,
+    averageHeartRate: 150,
+    maxHeartRate: 160,
+    minHeartRate: 140
+};
 
 async function main() {
   try {
@@ -133,6 +276,8 @@ async function main() {
     await resetAutoIncrement();
 
     console.log('\n----------------------------------------\n');
+
+    console.log('\n------Test de la classe user_dao------\n');
 
     // Insertion d'un utilisateur valide
     await insertUser(user1);
@@ -168,9 +313,49 @@ async function main() {
     await insertUser(user1);
     await insertUser(user2);
 
+    // Affichage de tous les utilisateurs une fois qu'ils ont été réinsérés
+    console.log('Affichage de tous les utilisateurs :');
+    await showAllUsers();
+
     // Affichage de l'utilisateur avec l'email 'noepierre@gmail'
     console.log('Affichage de l\'utilisateur avec l\'email \'noepierre@gmail.com\' :');
     await showUserByEmail('noepierre@gmail.com');
+
+    console.log('\n------Test de la classe activity_dao------\n');
+
+    // Insertion d'une activité
+    await insertActivity(activity1);
+
+    // Affichage de l'activité 1
+    console.log('Affichage de l\'activité 1 :');
+    await showActivity(1);
+
+    // mise à jour de l'activité 1
+    await updateActivity(1, activity1Updated);
+
+    // insertion de l'activité 2
+    await insertActivity(activity2);
+
+    // insertion de l'activité 3
+    await insertActivity(activity3);
+
+    // Affichage des activités de l'utilisateur 1
+    console.log('Affichage des activités de l\'utilisateur 1 :');
+    await showActivitiesByUser(1);
+
+    // Affichage des activités de l'utilisateur avec l'email 'noepierre@gmail.com'
+    console.log('Affichage des activités de l\'utilisateur avec l\'email \'noepierre@gmail.com\' :');
+    await findActivitiesByUserMail('noepierre@gmail.com');
+
+    // Suppression de l'activité 1
+    await deleteActivity(1);
+
+    // Affichage de toutes les activités
+    console.log('Affichage de toutes les activités :');
+    await showAllActivities();
+
+    // Suppression de toutes les activités
+    await deleteAllActivities();
 
     console.log('\n----------------------------------------\n');
 
