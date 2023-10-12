@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+var session = require('express-session');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,6 +10,7 @@ var users = require('./routes/users');
 var connect = require('./routes/connect');
 var disconnect = require('./routes/disconnect');
 var profilEdit = require('./routes/profilEdit');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -27,6 +29,20 @@ app.use('/users',users);
 app.use('/connect',connect);
 app.use('/disconnect',disconnect);
 app.use('/profilEdit',profilEdit);
+app.use('/upload',upload);
+
+// Configuration de la session
+app.use(session({
+  secret: 'votre_secret',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use((req, res, next) => {
+  res.locals.userId = req.session.userId;
+  next();
+});
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

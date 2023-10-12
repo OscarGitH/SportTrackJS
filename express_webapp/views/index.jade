@@ -1,5 +1,41 @@
-extends layout
+doctype html
+html(lang='fr')
+  head
+    meta(charset='utf-8')
+    title SportTrack | Accueil
+    link(rel='icon' type='image/png' href='img/Run_icon.png')
+    link(rel='stylesheet' href='../views/index.css' media='screen' type='text/css')
+    link(rel='preconnect' href='https://fonts.googleapis.com')
+    link(href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,400&display=swap' rel='stylesheet')
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css' rel='stylesheet')
+  body
+    header
+      .menu
+        a(href='/')
+          img(src='../img/sporttrack.png', alt='SportTrack Logo')
+        if !userId
+          p.explication SportTrack permet à des sportifs disposant d’une montre "cardio/gps" de pouvoir sauvegarder et gérer des données de position et de fréquence cardiaque
+          a.signuptext(href='/user_add') Créer un compte
+        else
+          p.explication
+            | Bienvenue, #{firstName} !
+            br
+            | Accédez à votre compte pour consulter vos données ou ajouter un nouveau fichier
+          a.myaccount(href='/profilEdit') Mon compte
 
-block content
-  h1= title
-  p Welcome to #{title}
+    main
+      .conteneur
+        .conteneur
+        if !userId
+          p.explication SportTrack permet à des sportifs disposant d’une montre "cardio/gps" de pouvoir sauvegarder et gérer des données de position et de fréquence cardiaque
+          a.signuptext(href='/users') Créer un compte
+        else
+          p.explication
+            | Bienvenue, #{firstName} !
+            br
+            | Accédez à votre compte pour consulter vos données ou ajouter un nouveau fichier
+          a.myaccount(href='/profilEdit') Mon compte
+
+    footer
+      section
+        a.apropos(href='apropos') À propos 

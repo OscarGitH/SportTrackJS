@@ -1,15 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var session = require('express-session');
 var user_dao = require('../../sport-track-db/sport-track-db').user_dao;
-
-// Configuration de la session
-router.use(session({
-    secret: 'O6u9yRX0XkK2D6e8FnLtRs4C7DIs3Xit42ebg5OpWY0',
-    resave: false,
-    saveUninitialized: true
-}));
-
 
 router.get('/', async function (req, res, next) {
     try {
@@ -22,7 +13,6 @@ router.get('/', async function (req, res, next) {
 
 router.post('/', async function (req, res, next) {
     const { email, password } = req.body;
-    console.log(email, password);
     try {
         // Vérification des informations de connexion
         const user = await user_dao.findByEmail(email);
@@ -36,7 +26,7 @@ router.post('/', async function (req, res, next) {
         } else {
             // Stockage de l'ID utilisateur dans la session
             req.session.userId = userId;
-            res.status(200).send('Utilisateur connecté avec succès');
+            res.redirect('/');
         }
 
     } catch (error) {
