@@ -4,7 +4,7 @@
   "description": "database for SportTrack Web Application",
   "main": "sport-track-db.js",
   "scripts": {
-    "test": "sport-track-db-test.js"
+    "test": "node sport-track-db-test.js"
   },
   "author": "",
   "license": "ISC",
