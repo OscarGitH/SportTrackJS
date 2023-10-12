@@ -49,7 +49,47 @@ async function showUser(userId) {
         console.error('Erreur lors de l\'affichage de l\'utilisateur :', err);
         throw err;
     }
+}
+
+async function showUserByEmail(email) {
+    try {
+        const user = await user_dao.findByEmail(email);
+        console.log('Utilisateur ' + email + ' :', user);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage de l\'utilisateur :', err);
+        throw err;
     }
+}
+
+async function showAllUsers() {
+    try {
+        const users = await user_dao.findAll();
+        console.log('Utilisateurs :', users);
+    } catch (err) {
+        console.error('Erreur lors de l\'affichage des utilisateurs :', err);
+        throw err;
+    }
+}
+
+async function deleteUser(userId) {
+    try {
+        await user_dao.delete(userId);
+        console.log('Utilisateur supprimé avec succès');
+    } catch (err) {
+        console.error('Erreur lors de la suppression de l\'utilisateur :', err);
+        throw err;
+    }
+}
+
+async function deleteAllUsers() {
+    try {
+        await user_dao.deleteAll();
+        console.log('Tous les utilisateurs ont été supprimés avec succès');
+    } catch (err) {
+        console.error('Erreur lors de la suppression de tous les utilisateurs :', err);
+        throw err;
+    }
+}
 
 const user1 = {
     lastName: 'Pierre',
@@ -74,6 +114,18 @@ const user1Updated = {
     password: 'password123'
 }
 
+const user2 = {
+  lastName: 'Pavoine',
+  firstName: 'Oscar',
+  birthDate: '2004-01-04',
+  gender: 'M',
+  height: 181,
+  weight: 80,
+  email: 'oscar@gmail.com',
+  password: 'password123'
+}
+
+
 async function main() {
   try {
     // Connexion à la base de données SQLite
@@ -94,6 +146,31 @@ async function main() {
     // mise à jour de l'utilisateur 1
     await updateUser(user1Updated);
     console.log('\n');
+
+    // insertion de l'utilisateur 2
+    await insertUser(user2);
+
+    // Affichage de tous les utilisateurs
+    console.log('Affichage de tous les utilisateurs :');
+    await showAllUsers();
+
+    // Suppression de l'utilisateur 1
+    await deleteUser(1);
+
+    // Affichage de tous les utilisateurs
+    console.log('Affichage de tous les utilisateurs :');
+    await showAllUsers();
+
+    // Suppression de tous les utilisateurs
+    await deleteAllUsers();
+
+    // Insertion des utilisateurs 1 et 2
+    await insertUser(user1);
+    await insertUser(user2);
+
+    // Affichage de l'utilisateur avec l'email 'noepierre@gmail'
+    console.log('Affichage de l\'utilisateur avec l\'email \'noepierre@gmail.com\' :');
+    await showUserByEmail('noepierre@gmail.com');
 
     console.log('\n----------------------------------------\n');
 
