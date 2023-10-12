@@ -138,6 +138,20 @@ class user_dao {
             });
         });
     }    
+
+    static connectUserByEmail(email, password) {
+        const sql = `SELECT * FROM User WHERE email = ? AND password = ?`;
+
+        return new Promise((resolve, reject) => {
+            db.get(sql, [email, password], (err, row) => {
+                if (err) {
+                    reject(err.message);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    }
 }
 
 var dao = new user_dao();
