@@ -29,7 +29,7 @@ router.post('/', async function(req, res, next) {
 
       // Création de l'utilisateur en utilisant la classe UserDAO
       try {
-          const userId = await user_dao.insert(userData);
+          await user_dao.insert(userData);
           res.status(201).send(`Utilisateur créé avec l'ID avec succès`);
       } catch (error) {
           console.error(error);
