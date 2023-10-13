@@ -1,31 +1,21 @@
-doctype html
-html
-    head
-        meta(charset='utf-8')
-        title SportTrack | À Propos
-        link(rel='icon', type='image/png', href='img/Run_icon.png')
-        link(rel='stylesheet', href='../views/apropos.css')
-        link(rel='preconnect', href='https://fonts.googleapis.com')
-        link(href='https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;1,400&display=swap', rel='stylesheet')
-        link(href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css', rel='stylesheet')
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+          img(src='../img/sporttrack.png', alt='SportTrack Logo')
+        if userId
+          a(href='disconnect') SE DECONNECTER
+          a.myaccount(href='profilEdit') MON COMPTE
+        else
+          a(href='/connect') SE CONNECTER
+          a(href='/users') S'INSCRIRE
+
     body
-        header
-            .menu
-                a(href='/')
-                    img(src='../img/sporttrack.png', alt='SportTrack Logo')
-                if userId
-                    a(href='disconnect') SE DECONNECTER
-                    a.myaccount(href='my_account') MON COMPTE
-                else
-                    a(href='connect') SE CONNECTER
-                    a(href='users') INSCRIRE
         .about-me-container
             h2 À propos de nous :
-            if !userId
-                p
-                    | Vous n'êtes pas connecté.
-            else
-                p
-                    | NOMS : #{userId.firstName}
-                p
-                    | PRENOMS : #{userId.lastName}
+            p
+                | NOMS : PIERRE, PAVOINE
+            p
+                | PRENOMS : Noé, Oscar

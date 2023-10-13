@@ -1,0 +1,488 @@
+body {
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; /* Pour empêcher le défilement de l'image de fond */
+  font-family: Montserrat;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Pour centrer le contenu vertical */
+  width: 100%;
+  height: 100%; /* Ajoutez cette ligne pour couvrir toute la page */
+  margin: 0; /* Supprimez les marges par défaut */
+}
+
+
+.conteneur {
+  text-align: center;
+  padding: 20px;
+  padding-bottom: 30px;
+  max-width: 400px;
+  border-radius: 10px;
+  background: rgb(255, 255, 236);
+  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.25);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.explication {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 25px;
+}
+
+.signuptext {
+  font-weight: bold;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #303030;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: font-size 0.4s;
+}
+
+.conteneur .signuptext:hover {
+  font-size: 17px;
+}
+
+.menu {
+  text-align: right;
+  display: block;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: auto;
+  font-size: 16px;
+  background: rgb(255, 255, 236);
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+}
+
+.menu a {
+  margin-right: 50px;
+  line-height: 75px;
+  text-decoration: none;
+  color: #303030;
+  font-family: Montserrat;
+  border: none;
+  margin-block-end: 0;
+  font-weight: 600;
+}
+
+.menu a:hover {
+  color: #303030;
+  font-family: Montserrat;
+  border: none;
+}
+
+.menu img {
+  margin-top: 12.5px;
+  margin-left: 20px;
+  float: left;
+  width: 250px;
+}
+
+.menu .myaccount {
+  color: rgb(255, 255, 236);
+  padding: 10px;
+  width: 600px;
+  border-radius: 5px;
+  background: #303030;
+}
+
+.menu .myaccount:hover {
+  color: rgb(255, 255, 236);
+}
+
+header {
+  background: rgb(255, 255, 236);
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  padding: 10px 0;
+  text-align: right;
+  position: fixed;
+  top: 0;
+  z-index: 1; /* Pour empêcher le header de se superposer à d'autres éléments */
+}
+
+header a {
+  margin-right: 50px;
+  text-decoration: none;
+  color: #303030;
+  font-family: Montserrat;
+  font-weight: 600;
+}
+
+main {
+  text-align: center;
+  margin-top: 100px;
+}
+
+footer {
+  background: rgb(255, 255, 236);
+  box-shadow: 0px 0px 20px 10px rgba(0, 0, 0, 0.25);
+  width: 100%;
+  padding: 10px 0;
+  position: absolute;
+  bottom: 0;
+  text-align: right;
+}
+
+.apropos {
+  font-size: 10px;
+  font-weight: bold;
+  margin-top: 10px;
+  text-decoration: none;
+  margin-right: 50px;
+  color: #303030;
+}
+
+.myaccount {
+  color: rgb(255, 255, 236);
+  padding: 10px;
+  font-weight: bold;
+  border-radius: 5px;
+  background: #303030;
+  text-decoration: none;
+  font-size: 16px;
+  transition: font-size 0.4s;
+}
+
+.conteneur .myaccount:hover {
+  font-size: 17px;
+}
+
+.formulaire {
+  margin-top: 175px;
+  margin-bottom: auto;
+  width: auto;
+  border-radius: 18px;
+  padding: 0 50px 0 50px;
+  background: rgb(255, 255, 236);
+  align-items: center;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.25);
+}
+
+  
+  .formulaire > h1 {
+    text-align: center;
+  }
+  
+  .formulaire form {
+  margin-block-end: auto;
+  }
+  
+  .formulaire form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 70px;
+  }
+  
+  .formulaire form div > label {
+    margin-bottom: 7px;
+    font-weight: 600;
+  }
+  
+  .formulaire form div > input, form div > select {
+    background: #d1d1d1;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Montserrat, "sans-serif";
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+  }
+  
+  form div > input:empty {
+    background: #d1d1d1;
+  }
+  
+  .formulaire form div > select:invalid {
+    color: #303030;
+  }
+  
+  .formulaire form div > select option {
+    background: white;
+    color: #303030;
+  }
+  
+  .formulaire form button {
+    margin-top: 10px;
+    background: #d1d1d1;
+    font-family: Montserrat;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    width: 600px;
+    border-radius: 5px;
+    justify-content: center;
+  }
+  
+  .formulaire button {
+  font-family: Montserrat;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 600px;
+  padding: 5px;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-block-end: 1em;
+  }
+  
+  .formulaire button:hover {
+  background: #bbbbbb;
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+  }
+  
+  .formulaire a {
+  outline: none;
+  text-decoration: none;
+  font-family: Montserrat;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-block-end: 1em;
+  }
+  
+  .formulaire a:link {
+  color: #303030;
+  }
+  
+  .formulaire a:visited {
+  color: #303030;
+  }
+  
+  .formulaire i {
+  cursor: pointer;
+  }
+
+
+
+  .about-me-container {
+    text-align: center;
+    width: 300px;
+    background: rgb(255, 255, 236);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: auto;
+}  
+
+.information {
+  margin-top: 175px;
+  margin-bottom: auto;
+  width: auto;
+  border-radius: 18px;
+  padding: 0 50px 0 50px;
+  background: rgb(255, 255, 236);
+  align-items: center;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.25);
+}
+
+  
+  .information > h1 {
+    text-align: center;
+  }
+  
+  .information form {
+  margin-block-end: auto;
+  }
+  
+  .information form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 70px;
+  }
+  
+  .information form div > label {
+    margin-bottom: 7px;
+    font-weight: 600;
+  }
+  
+  .information form div > input, form div > select {
+    background: #d1d1d1;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Montserrat, "sans-serif";
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+  }
+  
+  form div > input:empty {
+    background: #d1d1d1;
+  }
+  
+  .information form div > select:invalid {
+    color: #303030;
+  }
+  
+  .information form div > select option {
+    background: white;
+    color: #303030;
+  }
+  
+  .information form button {
+    margin-top: 10px;
+    background: #d1d1d1;
+    font-family: Montserrat;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    width: 600px;
+    border-radius: 5px;
+    justify-content: center;
+  }
+  
+  .information button {
+  font-family: Montserrat;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: 600px;
+  padding: 5px;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-block-end: 1em;
+  }
+  
+  .information button:hover {
+  background: #bbbbbb;
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+  }
+  
+  .information a {
+  outline: none;
+  text-decoration: none;
+  font-family: Montserrat;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-block-end: 1em;
+  }
+  
+  .information a:link {
+  color: #303030;
+  }
+  
+  .information a:visited {
+  color: #303030;
+  }
+
+  .fichier {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: #303030;
+}
+
+.upload {
+  margin-top: 175px;
+  margin-bottom: auto;
+  width: auto;
+  border-radius: 18px;
+  padding: 0 50px 0 50px;
+  background: rgb(255, 255, 236);
+  align-items: center;
+  box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.25);
+}
+
+.upload > h1 {
+    text-align: center;
+}
+
+.upload form {
+  margin-block-end: auto;
+}
+
+.upload form div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: 70px;
+  }
+  
+  .upload form div > label {
+    margin-bottom: 7px;
+    font-weight: 600;
+  }
+
+  .upload form div input {
+    background: #d1d1d1;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: Montserrat, "sans-serif";
+    box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+  }
+
+  .upload form button {
+    margin-top: 10px;
+    background: #d1d1d1;
+    font-family: Montserrat;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    width: 600px;
+    border-radius: 5px;
+    justify-content: center;
+}
+
+.upload button {
+  font-family: Montserrat;
+  padding: 5px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  width: auto;
+  font-weight: 600;
+  border-radius: 5px;
+  margin-block-end: 1em;
+}
+
+.upload button:hover {
+  background: #bbbbbb;
+  box-shadow: 0px 2px 2px 0px rgba(0,0,0,0.25);
+}
+
+.upload a {
+  outline: none;
+  text-decoration: none;
+  font-family: Montserrat;
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  margin-block-end: 1em;
+}
+
+.upload a:link {
+  color: #303030;
+}
+
+.upload a:visited {
+  color: #303030;
+}
+
+.upload i {
+  cursor: pointer;
+}
