@@ -1,3 +1,19 @@
-html
-    body 
-        include ./upload/uploadfichier.html
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+          img(src='img/sporttrack.png')
+        a.myaccount(href='/profilEdit') MON COMPTE
+
+    body
+        .upload
+            h1  Ajouter un fichier
+            form(class method='post' enctype='multipart/form-data')
+                div
+                    label(for='fichier') Ajouter votre fichier (fichier JSON uniquement)
+                    input#file.fichier(type='file' name='file' accept='.json' required='')
+                button(type='submit') J'ajoute mon fichier
+            form
+                a(href='/') Retourner à l'accueil

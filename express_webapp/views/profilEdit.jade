@@ -1,3 +1,15 @@
-html
-    body 
-        include ./myaccount/myaccount.html
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+            img(src='../img/sporttrack.png', alt='SportTrack Logo')
+        a(href='upload') AJOUTER UN FICHIER
+        a(href='activities') MES ACTIVITÉS
+      
+    body
+        .information
+            h1 Mes informations
+
+            *A FINIR*

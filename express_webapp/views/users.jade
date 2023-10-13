@@ -1,3 +1,43 @@
-html
-    body 
-        include ./signup/signup.html
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+          img(src='img/sporttrack.png')
+        a(href='connect') SE CONNECTER
+
+    .formulaire
+      h1  Inscrivez-vous sur SportTrack ! 
+      form(method='post')
+        div
+          label(for='nom') Votre nom
+          input#nom(type='text' name='lastName' placeholder='Nom' required='')
+        div
+          label(for='prenom') Votre prénom
+          input#prenom(type='text' name='firstName' placeholder='Prénom' required='')
+        div
+          label(for='date-de-naissance') Votre date de naissance
+          input#date-de-naissance(type='date' name='birthDate' placeholder='JJ-MM-AAAA' required='')
+        div
+          label(for='sexe') Votre sexe
+          select#sexe(name='gender' required='')
+            option(value='' disabled='' selected='' hidden='') Cliquez pour répondre
+            option(value='M') Homme
+            option(value='F') Femme
+            option(value='Other') Ne préfère pas répondre
+        div
+          label(for='taille') Votre taille (en cm)
+          input#taille(type='number' name='height' placeholder='Exemple : 182' required='')
+        div
+          div
+            label(for='poids') Votre poids (en kg)
+            input#poids(type='number' name='weight' placeholder='Exemple : 75' required='')
+          div
+            label(for='email') Votre e-mail
+            input#email(type='text' name='email' placeholder='monadresse@mail.com' required='')
+          div
+            label(for='password') Votre mot de passe (6 caractères minimum)
+            input#password(type='password' name='password' placeholder='Mot de passe' required='')
+        button(type='submit') Je m'inscris
+      a(href='connect') J'ai déjà un compte
