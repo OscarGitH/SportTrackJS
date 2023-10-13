@@ -1,0 +1,77 @@
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+          img(src='img/sporttrack.png')
+        a(href='/upload') AJOUTER UN FICHIER
+        a.myaccount(href='/profilEdit') MON COMPTE
+
+    body
+        .activities
+        h1 Mes activités
+        //
+            ?php
+            usort($activities, function ($a, $b) {
+            $timestampA = strtotime($a-
+        | getDate());
+        | $timestampB = strtotime($b->getDate());
+        | if ($timestampA == $timestampB) {
+        | return 0;
+        | }
+        | if ($timestampA < $timestampB) {
+        | return -1;
+        | } else {
+        | return 1;
+        | }
+        | });
+        | ?>
+        // ?php if (empty($activities)) { ?
+        p Pas d'activités pour le moment.
+        a.upload(href='upload') Ajouter une activité
+        // ?php } else { ?
+        table
+            tbody
+            tr
+                th Date et heure de début
+                th Description
+                th Durée
+                th Distance
+                th Vitesse moyenne
+                th Dénivelé
+                th Fréquence cardiaque moyenne
+                th Fréquence cardiaque max
+                th Fréquence cardiaque min
+            // ?php foreach ($activities as $activity) { ?
+            tr
+                td
+                // ?php echo $activity-
+                | getDate(); ?>
+                td
+                // ?php echo $activity-
+                | getDescription(); ?>
+                td
+                // ?php echo $activity-
+                | getTime(); ?>
+                td
+                // ?php echo $activity-
+                | getDistance(); ?> km
+                td
+                // ?php echo $activity-
+                | getAverageSpeed(); ?> km/h
+                td
+                // ?php echo $activity-
+                | getTotalAltitude(); ?> m
+                td
+                // ?php echo $activity-
+                | getAverageHeartRate(); ?> bpm
+                td
+                // ?php echo $activity-
+                | getMaxHeartRate(); ?> bpm
+                td
+                // ?php echo $activity-
+                | getMinHeartRate(); ?> bpm
+            // ?php } ?
+            // ?php } ?
+            a.accueil(href='/') Retourner à l'accueil
