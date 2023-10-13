@@ -9,23 +9,22 @@ router.use(session({secret: 'votre-secret-secret'}));
 
 // GET /activities
 router.get('/', async function (req, res, next) {
-    socker = req.session;
     try {
+        socker = req.session; // Assign req.session to socker
         if (!socker.userId) {
             return res.status(400).send("Vous n'êtes pas connecté.");
         }
         // Récupération de l'ID utilisateur depuis la session
-        const userId = socker.userId;
+        const userId = socker.userId.userId;
         // Récupération des activités de l'utilisateur
         const activities = await activity_dao.findByIdUser(userId);
-        
-        // Pass the activities data to the template and render it
-        res.render('activities', { activities });
+        res.render('activities', { activities: activities });
     } catch (error) {
         console.error(error);
         res.status(500).send('Erreur lors de la récupération des activités');
     }
 });
+
 
 
 // POST /activities

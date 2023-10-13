@@ -11,7 +11,9 @@ block content
     body
         .activities
             h1 Mes activités
+            
             - if (activities.length > 0)
+                p= 'Vous avez ' + activities.length + ' activité' + (activities.length > 1 ? 's' : '') + ' :'
                 table
                     thead
                         tr
