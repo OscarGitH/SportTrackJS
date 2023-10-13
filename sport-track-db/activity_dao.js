@@ -166,18 +166,22 @@ class ActivityDAO {
             uploadedData.date,
             uploadedData.description,
             uploadedData.time,
-            uploadedData.heartRate,
+            uploadedData.cardio_frequency,
             uploadedData.latitude,
             uploadedData.longitude,
             uploadedData.altitude
         ];
 
+
+
         return new Promise((resolve, reject) => {
             db.run(sql, values, (err, result) => {
                 if (err) {
                     console.error('Erreur lors de l\'insertion des données :', err);
+                    reject(err); // Rejeter la promesse en cas d'erreur
                 } else {
                     console.log('Données insérées avec succès.');
+                    resolve(result); // Résoudre la promesse en cas de succès
                 }
             });
         });

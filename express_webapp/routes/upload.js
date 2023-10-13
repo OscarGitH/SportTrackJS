@@ -22,31 +22,32 @@ router.get('/', async function(req, res, next) {
 });
 
 router.post('/', (req, res) => {
-    const uploadedFile = req.files.file;
+  const uploadedFile = req.files.file;
 
-    if (!uploadedFile) {
-        return res.status(400).send('Aucun fichier n\'a été téléchargé.');
+  if (!uploadedFile) {
+    return res.status(400).send('Aucun fichier n\'a été téléchargé.');
+  }
+  const fileData = uploadedFile.data;
+
+  try {
+    const jsonData = JSON.parse(fileData.toString('utf8'));
+
+    const activityData = jsonData.activity;
+    const activityDate = activityData.date;
+    const activityDescription = activityData.description;
+
+    const activityId = 1; // Supposons que vous avez déjà l'ID de l'activité
+
+    for (const data of jsonData.data) {
+      data.date = activityDate; // Ajoutez la date aux données
+      data.description = activityDescription; // Ajoutez la description aux données
+      activity_dao.insertFile(activityId, data);
     }
 
-    const fileData = uploadedFile.data;
-    try {
-        const jsonData = JSON.parse(fileData.toString('utf8'));
-
-        if (!Array.isArray(jsonData)) {
-            return res.status(400).send('Le fichier ne contient pas de données valides.');
-        }
-        const activityId = 1;
-        // Supposons que vous avez déjà un objet `activity` pour cette activité
-        for (const data of jsonData) {
-            activity_dao.insertFile(activityId, data);
-            console.log('Données insérées avec succès :', data);
-        }
-
-        res.send('Les données du fichier ont été insérées avec succès.');
-    } catch (error) {
-        console.error('Erreur lors de la lecture du fichier :', error);
-        res.status(500).send('Erreur lors de la lecture du fichier.');
-    }
-
+    res.send('Les données du fichier ont été insérées avec succès.');
+  } catch (error) {
+    console.error('Erreur lors de la lecture du fichier :', error);
+    res.status(500).send('Erreur lors de la lecture du fichier.');
+  }
 });
 module.exports = router;
