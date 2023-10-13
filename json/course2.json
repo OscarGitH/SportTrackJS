@@ -1,0 +1,13 @@
+{
+    "activity": {
+        "date": "25/09/2022",
+        "description": "Course 2"
+    },
+    "data": [
+        {"time": "13:00:00", "cardio_frequency": 99, "latitude": 47.644795, "longitude": -2.776605, "altitude": 15},
+        {"time": "13:05:00", "cardio_frequency": 100, "latitude": 47.655035, "longitude": -2.776862, "altitude": 20},
+        {"time": "13:10:00", "cardio_frequency": 102, "latitude": 47.665275, "longitude": -2.777119, "altitude": 18},
+        {"time": "13:15:00", "cardio_frequency": 100, "latitude": 47.675516, "longitude": -2.777376, "altitude": 21},
+        {"time": "13:20:00", "cardio_frequency": 98, "latitude": 47.685756, "longitude": -2.777633, "altitude": 16}
+    ]
+}
