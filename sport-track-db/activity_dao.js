@@ -29,7 +29,7 @@ class ActivityDAO {
             });
         });
     }
-    
+
 
     static findByIdUser(idUser, callback) {
         const sql = "SELECT * FROM Activity WHERE userId = ?";
@@ -154,6 +154,34 @@ class ActivityDAO {
                     reject(err.message);
                 } else {
                     resolve("Autoincrement reset.");
+                }
+            });
+        });
+    }
+
+    static insertFile(activityId, uploadedData) {
+        const sql = `INSERT INTO Data (activityId, date, description, time, heartRate, latitude, longitude, altitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+        const values = [
+            activityId,
+            uploadedData.date,
+            uploadedData.description,
+            uploadedData.time,
+            uploadedData.cardio_frequency,
+            uploadedData.latitude,
+            uploadedData.longitude,
+            uploadedData.altitude
+        ];
+
+
+
+        return new Promise((resolve, reject) => {
+            db.run(sql, values, (err, result) => {
+                if (err) {
+                    console.error('Erreur lors de l\'insertion des données :', err);
+                    reject(err); // Rejeter la promesse en cas d'erreur
+                } else {
+                    console.log('Données insérées avec succès.');
+                    resolve(result); // Résoudre la promesse en cas de succès
                 }
             });
         });
