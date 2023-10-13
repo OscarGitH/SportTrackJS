@@ -20,7 +20,8 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
   const userData = req.body;
-  try {
+  socket = req.session;
+    try {
       // Vérification que l'adresse e-mail de l'utilisateur est unique
       const existingUser = await user_dao.findByEmail(userData.email);
       if (existingUser) {
@@ -30,7 +31,26 @@ router.post('/', async function(req, res, next) {
       // Création de l'utilisateur en utilisant la classe UserDAO
       try {
           await user_dao.insert(userData);
-          res.status(201).send(`Utilisateur créé avec l'ID avec succès`);
+          // res.status(201).send(`Utilisateur créé avec l'ID avec succès`);
+          try {
+              // Vérification des informations de connexion
+              const user = await user_dao.findByEmail(userData.email);
+              if (!user) {
+                  return res.status(400).send("L'adresse e-mail est incorrecte.");
+              }
+
+              const userId = await user_dao.connectUserByEmail(user.email, user.password);
+              if (!userId) {
+                  return res.status(400).send('Le mot de passe est incorrect.');
+              } else {
+                  // Stockage de l'ID utilisateur dans la session
+                  socket.userId = userId;
+                  res.redirect('/');
+              }
+          } catch (error) {
+              console.error(error);
+              res.status(500).send('Erreur lors de la tentative de connexion');
+          }
       } catch (error) {
           console.error(error);
           res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur');
