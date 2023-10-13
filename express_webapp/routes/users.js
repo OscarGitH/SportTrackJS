@@ -30,7 +30,10 @@ router.post('/', async function(req, res, next) {
       // Création de l'utilisateur en utilisant la classe UserDAO
       try {
           await user_dao.insert(userData);
-          res.status(201).send(`Utilisateur créé avec l'ID avec succès`);
+          // Sauvegardez ici l'ID de l'utilisateur dans la session
+          socker.userId = userData.id;
+
+          res.redirect('/');
       } catch (error) {
           console.error(error);
           res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur');
