@@ -59,11 +59,10 @@ class ActivityDAO {
         });
     }
 
-    static insert(activity, callback) {
+    static insert(activity) {
         this.resetAutoIncrement();
-        const sql = db.prepare("INSERT INTO Activity(activityId, userId, date, description, time, distance, averageSpeed, maxSpeed, totalAltitude, averageHeartRate, maxHeartRate, minHeartRate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        sql.run(
-            activity.activityId,
+        const sql = ('INSERT INTO Activity(userId, date, description, time, distance, averageSpeed, maxSpeed, totalAltitude, averageHeartRate, maxHeartRate, minHeartRate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        const values = [
             activity.userId,
             activity.date,
             activity.description,
@@ -74,19 +73,19 @@ class ActivityDAO {
             activity.totalAltitude,
             activity.averageHeartRate,
             activity.maxHeartRate,
-            activity.minHeartRate,
-            function (err) {
+            activity.minHeartRate
+        ];
+        return new Promise((resolve, reject) => {
+            db.run(sql, values, (err, result) => {
                 if (err) {
-                    console.error("Error inserting activity:", err.message);
+                    console.error('Erreur lors de l\'insertion de l\'activité :', err);
+                    reject(err); // Rejeter la promesse en cas d'erreur
                 } else {
-                    activity.activityId = this.lastID;
+                    console.log('Activité insérée avec succès.');
+                    resolve(result); // Résoudre la promesse en cas de succès
                 }
-                if (typeof callback === 'function') {
-                    callback(err, activity.activityId);
-                }
-            }
-        );
-        sql.finalize();
+            });
+        });
     }
 
     static delete(activityId, callback) {
@@ -153,39 +152,51 @@ class ActivityDAO {
                 if (err) {
                     reject(err.message);
                 } else {
-                    resolve("Autoincrement reset.");
+                    resolve(`Autoincrement reset`);
                 }
             });
         });
     }
 
-    static insertFile(activityId, uploadedData) {
-        const sql = `INSERT INTO Data (activityId, date, description, time, heartRate, latitude, longitude, altitude) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+    static insertFile(activityId, activity) {
+        this.resetAutoIncrement();
+        const sql = ('INSERT INTO Data(activityId, date, description, time, heartRate, latitude, longitude, altitude ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
         const values = [
             activityId,
-            uploadedData.date,
-            uploadedData.description,
-            uploadedData.time,
-            uploadedData.cardio_frequency,
-            uploadedData.latitude,
-            uploadedData.longitude,
-            uploadedData.altitude
+            activity.date,
+            activity.description,
+            activity.time,
+            activity.cardio_frequency,
+            activity.latitude,
+            activity.longitude,
+            activity.altitude,
         ];
 
-
-
         return new Promise((resolve, reject) => {
-            db.run(sql, values, (err, result) => {
+            db.run(sql, values, function(err) {
                 if (err) {
-                    console.error('Erreur lors de l\'insertion des données :', err);
+                    console.error('Erreur lors de l\'insertion de l\'activité :', err);
                     reject(err); // Rejeter la promesse en cas d'erreur
                 } else {
-                    console.log('Données insérées avec succès.');
-                    resolve(result); // Résoudre la promesse en cas de succès
+                    console.log('Activité insérée avec succès.');
+                    resolve(); // Résoudre la promesse en cas de succès
+                }
+            });
+        });
+    }
+
+    static getLastActivityId () {
+        const sql = "SELECT activityId FROM Activity ORDER BY activityId DESC LIMIT 1";
+
+        return new Promise((resolve, reject) => {
+            db.get(sql, [], (err, row) => {
+                if (err) {
+                    reject(err.message);
+                } else {
+                    return row.activityId;
                 }
             });
         });
     }
 }
-
 module.exports = ActivityDAO;
