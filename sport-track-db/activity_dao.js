@@ -30,6 +30,20 @@ class ActivityDAO {
         });
     }
 
+    static findByActivityId(activityId, callback) {
+        const sql = "SELECT * FROM Activity WHERE activityId = ?";
+
+        return new Promise((resolve, reject) => {
+            db.get(sql, [activityId], (err, row) => {
+                if (err) {
+                    reject(err.message);
+                } else {
+                    resolve(row);
+                }
+            });
+        });
+    }
+
 
     static findByIdUser(idUser, callback) {
         const sql = "SELECT * FROM Activity WHERE userId = ?";
@@ -118,10 +132,8 @@ class ActivityDAO {
     }
 
     static update(activityId, activity) {
-        const sql = "UPDATE Activity SET date = ?, description = ?, time = ?, distance = ?, averageSpeed = ?, maxSpeed = ?, totalAltitude = ?, averageHeartRate = ?, maxHeartRate = ?, minHeartRate = ? WHERE activityId = ?";
+        const sql = "UPDATE Activity SET time = ?, distance = ?, averageSpeed = ?, maxSpeed = ?, totalAltitude = ?, averageHeartRate = ?, maxHeartRate = ?, minHeartRate = ? WHERE activityId = ?";
         const params = [
-            activity.date,
-            activity.description,
             activity.time,
             activity.distance,
             activity.averageSpeed,
@@ -185,7 +197,7 @@ class ActivityDAO {
         });
     }
 
-    static getLastActivityId () {
+    static getLastActivityId() {
         const sql = "SELECT activityId FROM Activity ORDER BY activityId DESC LIMIT 1";
 
         return new Promise((resolve, reject) => {
@@ -193,7 +205,25 @@ class ActivityDAO {
                 if (err) {
                     reject(err.message);
                 } else {
-                    return row.activityId;
+                    if (row) {
+                        resolve(row.activityId);
+                    } else {
+                        resolve(null); // Aucune ligne trouvée
+                    }
+                }
+            });
+        });
+    }
+
+    static getDataByActivityId(activityId) {
+        const sql = "SELECT * FROM Data WHERE activityId = ?";
+
+        return new Promise((resolve, reject) => {
+            db.all(sql, [activityId], (err, rows) => {
+                if (err) {
+                    reject(err.message);
+                } else {
+                    resolve(rows);
                 }
             });
         });
