@@ -70,7 +70,7 @@ async function calculateAndUpdateActivityValues(activityId) {
     const datas = await activity_dao.getDataByActivityId(activityId);
 
     let time = '00:00:00';
-    let distance = 0.0
+    let distance = 0.0;
     let averageSpeed = 0.0;
     let maxSpeed = 0.0;
     let totalAltitude = 0.0;
@@ -80,44 +80,63 @@ async function calculateAndUpdateActivityValues(activityId) {
 
     let startTime = '00:00:00';
     let endTime = '00:00:00';
+    let previousAltitude = null;
     let i = 0;
+
+    const points = []; // Liste pour stocker les données de latitude et longitude
 
     for (const data of datas) {
       if (startTime === '00:00:00') {
-          startTime = data.time;
-          endTime = data.time;
+        startTime = data.time;
+        endTime = data.time;
       }
       if (data.time > endTime) {
-          endTime = data.time;
+        endTime = data.time;
       } else if (data.time < startTime) {
-          startTime = data.time;
+        startTime = data.time;
       }
       if (data.speed > maxSpeed) {
-          maxSpeed = data.speed;
+        maxSpeed = data.speed;
       }
-      if (data.heartRate > maxHeartRate) {
-          maxHeartRate = data.heartRate;
+      if (maxHeartRate === 0 && minHeartRate === 0) {
+        minHeartRate = data.heartRate;
+        maxHeartRate = data.heartRate;
+      } else if (data.heartRate > maxHeartRate) {
+        maxHeartRate = data.heartRate;
       } else if (data.heartRate < minHeartRate) {
-          minHeartRate = data.heartRate;
+        minHeartRate = data.heartRate;
       }
       averageHeartRate += data.heartRate;
+      if (previousAltitude !== null) {
+        totalAltitude += Math.abs(data.altitude - previousAltitude);
+      }
+      previousAltitude = data.altitude;
+
+      // Ajoutez les données de latitude et longitude à la liste des points
+      points.push({ latitude: data.latitude, longitude: data.longitude });
 
       i += 1;
     }
 
-    const startTimeMilliseconds = timeStringToMilliseconds(startTime);
-    const endTimeMilliseconds = timeStringToMilliseconds(endTime);
-    const timeInMilliseconds = endTimeMilliseconds - startTimeMilliseconds;
-    // Calculer les heures, minutes et secondes
-    const hours = Math.floor(timeInMilliseconds / 3600000);
-    const minutes = Math.floor((timeInMilliseconds % 3600000) / 60000);
-    const seconds = Math.floor((timeInMilliseconds % 60000) / 1000);
-
-    time = hours + ':' + minutes + ':' + seconds;
-    console.log('time: ' + time);
-
-    // averageSpeed = (distance / 1000) / (time / 3600);
     averageHeartRate = averageHeartRate / i;
+
+    startTime = convertToTimeObject(startTime);
+    endTime = convertToTimeObject(endTime);
+
+    const differenceInMillis = endTime - startTime;
+    const differenceInHours = Math.floor(differenceInMillis / (1000 * 60 * 60));
+    const differenceInMinutes = Math.floor((differenceInMillis % (1000 * 60 * 60)) / (1000 * 60));
+    const differenceInSeconds = Math.floor((differenceInMillis % (1000 * 60)) / 1000);
+
+    time = `${formatTimePart(differenceInHours)}:${formatTimePart(differenceInMinutes)}:${formatTimePart(differenceInSeconds)}`;
+
+    // Calcul de la distance totale à partir des données de latitude et longitude
+    distance = calculDistanceTrajet({ points });
+    distance = distance.toFixed(3);
+
+    averageSpeed = distance / (differenceInMillis / (1000 * 60 * 60));
+    averageSpeed = averageSpeed.toFixed(2);
+
 
     const ret = {
       time: time,
@@ -167,9 +186,16 @@ function calculDistanceTrajet(activite) {
 
   return distanceTotale;
 }
-function timeStringToMilliseconds(timeString) {
-  const [hours, minutes, seconds] = timeString.split(':').map(Number);
-  return ((hours * 3600 + minutes * 60 + seconds) * 1000);
+function convertToTimeObject(timeStr) {
+  const [hours, minutes, seconds] = timeStr.split(':');
+  const date = new Date();
+  date.setHours(parseInt(hours, 10));
+  date.setMinutes(parseInt(minutes, 10));
+  date.setSeconds(parseInt(seconds, 10));
+  return date;
+}
+function formatTimePart(part) {
+  return part.toString().padStart(2, '0');
 }
 
 module.exports = router;

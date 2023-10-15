@@ -138,7 +138,7 @@ class ActivityDAO {
             activity.distance,
             activity.averageSpeed,
             activity.maxSpeed,
-            activity.totalAltitude,
+                activity.totalAltitude,
             activity.averageHeartRate,
             activity.maxHeartRate,
             activity.minHeartRate,
