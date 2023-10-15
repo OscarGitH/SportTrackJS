@@ -6,7 +6,7 @@ var socker;
 // Configuration du middleware express-session
 router.use(session({secret: 'votre-secret-secret'}));
 
-
+// GET /users
 router.get('/', async function(req, res, next) {
     socker = req.session;
 

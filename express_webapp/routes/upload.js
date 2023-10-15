@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 
     const infoData = jsonData.data;
     const infoActivity = jsonData.activity;
-    const infoActivityDate = infoActivity.date;
+    const infoActivityDate = infoActivity.date + ' ' + infoData[0].time;
     const infoActivityDescription = infoActivity.description;
 
     const dataActivity = {
