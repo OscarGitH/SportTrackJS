@@ -119,12 +119,11 @@ async function calculateAndUpdateActivityValues(activityId) {
     }
 
     averageHeartRate = averageHeartRate / i;
-    averageHeartRate = averageHeartRate.toFixed(2);
 
     startTime = convertToTimeObject(startTime);
     endTime = convertToTimeObject(endTime);
 
-    const differenceInMillis = endTime - startTime;
+    const differenceInMillis = endTime.getTime() - startTime.getTime();
     const differenceInHours = Math.floor(differenceInMillis / (1000 * 60 * 60));
     const differenceInMinutes = Math.floor((differenceInMillis % (1000 * 60 * 60)) / (1000 * 60));
     const differenceInSeconds = Math.floor((differenceInMillis % (1000 * 60)) / 1000);
@@ -133,11 +132,12 @@ async function calculateAndUpdateActivityValues(activityId) {
 
     // Calcul de la distance totale à partir des données de latitude et longitude
     distance = calculDistanceTrajet({ points });
-    distance = distance.toFixed(3);
 
     averageSpeed = distance / (differenceInMillis / (1000 * 60 * 60));
-    averageSpeed = averageSpeed.toFixed(2);
 
+    averageSpeed = averageSpeed.toFixed(2);
+    distance = distance.toFixed(3);
+    averageHeartRate = averageHeartRate.toFixed(2);
 
     const ret = {
       time: time,
