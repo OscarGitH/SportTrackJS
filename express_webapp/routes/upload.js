@@ -119,6 +119,7 @@ async function calculateAndUpdateActivityValues(activityId) {
     }
 
     averageHeartRate = averageHeartRate / i;
+    averageHeartRate = averageHeartRate.toFixed(2);
 
     startTime = convertToTimeObject(startTime);
     endTime = convertToTimeObject(endTime);
