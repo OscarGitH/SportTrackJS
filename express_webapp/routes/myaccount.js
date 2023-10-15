@@ -13,7 +13,18 @@ router.get('/', async function (req, res, next) {
         res.render('myaccount',{userId: socker.userId });
     } catch (error) {
         console.error(error);
-        res.status(500).send('Erreur de apropos');
+        res.status(500).send('Erreur get de myaccount');
+    }
+});
+
+router.post('/', async function (req, res, next) {
+    try {
+
+        const user = await user_dao.update(req.body);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Erreur post de myaccount');
     }
 });
 
