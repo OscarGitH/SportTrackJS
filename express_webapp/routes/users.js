@@ -34,11 +34,13 @@ router.post('/', async function(req, res, next) {
             // si le mot de passe fais moins de 6 caractères on renvoie une erreur
             if (userData.password.length < 6) {
                 res.redirect('/password_too_short');
+                return;
             }
 
             // si l'adresse mail ne contient ni @ ni . on renvoie une erreur
             if (!userData.email.includes('@') || !userData.email.includes('.')) {
-                res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur mail');
+                res.redirect('/email_invalid');
+                return;
             }
 
             // On crée le nouvel objet utilisateur

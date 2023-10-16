@@ -6,7 +6,7 @@ block content
             a(href='/')
                 img(src='img/sporttrack.png')
             a(href='/upload') AJOUTER UN FICHIER
-            a.myaccount(href='/profilEdit') MON COMPTE
+            a.myaccount(href='/myaccount') MON COMPTE
 
     body
         .activities
@@ -40,6 +40,5 @@ block content
                                 td= activity.minHeartRate + ' bpm'
             - else
                 p Pas d'activités pour le moment.
-                a.accueil(href='/upload') Ajouter une activité
-
-            a.accueil(href='/') Retourner à l'accueil
+            
+            a.accueil(href='/upload') Ajouter une activité

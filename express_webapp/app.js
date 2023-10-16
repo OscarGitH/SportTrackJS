@@ -16,7 +16,10 @@ var activities = require('./routes/activities');
 var connexion_error = require('./routes/connexion_error');
 var update_error = require('./routes/update_error');
 var not_unique_email = require('./routes/not_unique_email');
+var password_too_short = require('./routes/password_too_short');
+var email_invalid = require('./routes/email_invalid');
 var myaccount = require('./routes/myaccount');
+var error = require('./routes/error');
 
 var app = express();
 
@@ -41,7 +44,10 @@ app.use('/activities',activities);
 app.use('/connexion_error',connexion_error);
 app.use('/update_error',update_error);
 app.use('/not_unique_email',not_unique_email);
+app.use('/password_too_short',password_too_short);
+app.use('/email_invalid',email_invalid);
 app.use('/myaccount',myaccount);
+app.use('/error',error);
 
 
 // catch 404 and forward to error handler
