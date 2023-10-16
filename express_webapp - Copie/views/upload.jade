@@ -1,0 +1,19 @@
+extends layout
+
+block content
+    header
+        .menu
+            a(href='/')
+                img(src='img/sporttrack.png')
+            a(href='/activities') MES ACTIVITÉS
+            a.myaccount(href='/myaccount') MON COMPTE
+
+    body
+        .upload
+            h1 Ajouter un fichier
+            form(action='/upload' method='post' enctype='multipart/form-data')
+                div
+                    label(for='file') Ajouter votre fichier (fichier JSON uniquement)
+                    input#file(type='file' name='file' accept='.json' required='')
+                button(type='submit') J'ajoute mon fichier
+            a(href='/') Retourner à l'accueil

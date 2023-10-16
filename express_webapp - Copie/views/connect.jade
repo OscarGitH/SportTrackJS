@@ -1,0 +1,21 @@
+extends layout
+
+block content
+    header
+      .menu
+        a(href='/')
+          img(src='img/sporttrack.png')
+        a(href='users') S'INSCRIRE
+
+    body
+    .formulaire
+      h1  Connectez-vous sur SportTrack ! 
+      form(method='post')
+        div
+          label(for='email') Votre e-mail
+          input#email(type='email' name='email' placeholder='monadresse@mail.com' required='')
+        div
+          label(for='password') Votre mot de passe
+          input#password(type='password' name='password' placeholder='Mot de passe' required='')
+        button(type='submit') Je me connecte
+      a(href='users') Je m'inscris
