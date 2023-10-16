@@ -10,9 +10,10 @@ router.use(session({secret: 'votre-secret-secret'}));
 // GET /activities
 router.get('/', async function (req, res, next) {
     try {
-        socker = req.session; // Assign req.session to socker
+        socker = req.session;
         if (!socker.userId) {
-            return res.status(400).send("Vous n'êtes pas connecté.");
+            // Si l'utilisateur n'est pas connecté, on redirige vers la page de connexion
+            return res.redirect('/connect');
         }
         // Récupération de l'ID utilisateur depuis la session
         const userId = socker.userId.userId;
@@ -33,7 +34,8 @@ router.post('/', async function (req, res, next) {
 
     try {
         if (!socker.userId) {
-            return res.status(400).send("Vous n'êtes pas connecté.");
+            // Si l'utilisateur n'est pas connecté, on redirige vers la page de connexion
+            return res.redirect('/connect');
         }
         // Récupération de l'ID utilisateur depuis la session
         const userId = socker.userId;

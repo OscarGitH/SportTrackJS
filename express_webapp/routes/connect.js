@@ -22,16 +22,16 @@ router.post('/', async function (req, res, next) {
         // Vérification des informations de connexion
         const user = await user_dao.findByEmail(email);
         if (!user) {
-            return res.status(400).send("L'adresse e-mail est incorrecte.");
+            return res.redirect('/connexion_error');
         }
 
-        const userId = await user_dao.connectUserByEmail(user.email, user.password);
+        const userId = await user_dao.connectUserByEmail(email, password);
         if (!userId) {
-            return res.status(400).send('Le mot de passe est incorrect.');
+            return res.redirect('/connexion_error');
         } else {
             // Stockage de l'ID utilisateur dans la session
             socket.userId = userId;
-            res.redirect('/');
+            return res.redirect('/');
         }
 
     } catch (error) {

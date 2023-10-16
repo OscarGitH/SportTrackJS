@@ -13,6 +13,7 @@ var profilEdit = require('./routes/profilEdit');
 var upload = require('./routes/upload');
 var apropos = require('./routes/apropos');
 var activities = require('./routes/activities');
+var connexion_error = require('./routes/connexion_error');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/profilEdit',profilEdit);
 app.use('/upload',upload);
 app.use('/apropos',apropos);
 app.use('/activities',activities);
+app.use('/connexion_error',connexion_error);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
