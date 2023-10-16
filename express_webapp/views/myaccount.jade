@@ -7,7 +7,7 @@ block content
                 img(src='../img/sporttrack.png', alt='SportTrack Logo')
             if userId
                 a(href='disconnect') SE DECONNECTER
-                a.myaccount(href='profilEdit') MON COMPTE
+                a(href='/profilEdit') MODIFIER MON COMPTE
             else
                 a(href='/connect') SE CONNECTER
                 a(href='/users') S'INSCRIRE
@@ -19,30 +19,19 @@ block content
             a(href='activities') MES ACTIVITÉS
         .information
             h1 Mes informations
-            form(method='POST')
-                div
-                    label(for='lastName') Nom:
-                    input#lastName(type='text' name='lastName' value='<?php echo $user->getLastName(); ?>')
-                div
-                    label(for='firstName') Prénom:
-                    input#firstName(type='text' name='firstName' value='<?php echo $user->getFirstName(); ?>')
-                div
-                    label(for='birthDate') Date de naissance:
-                    input#birthDate(type='text' name='birthDate' value='<?php echo $user->getBirthDate(); ?>')
-                div
-                    label(for='gender') Sexe:
-                    select#gender(name='gender')
-                        option(value='M' <?php='' if($user-='') getGender() == "Male") echo "selected"; ?>>Homme
-                        option(value='F' <?php='' if($user-='') getGender() == "Female") echo "selected"; ?>>Femme
-                        option(value='Other' <?php='' if($user-='') getGender() == "Other") echo "selected"; ?>>Autre
-                        div
-                        label(for='height') Taille (cm):
-                    input#height(type='number' name='height' value='<?php echo $user->getHeight(); ?>')
-                div
-                    label(for='weight') Poids (kg):
-                    input#weight(type='number' name='weight' value='<?php echo $user->getWeight(); ?>')
-                div
-                    label(for='email') Emairrrl:
-                    input#email(type='email' name='email' value='<?php echo $user->getEmail(); ?>')
-                button(type='submit') Enregistrer les modifications
+            p= 'Nom : ' + userId.lastName
+            p= 'Prénom : ' + userId.firstName
+            p= 'Email : ' + userId.email
+            p= 'Date de naissance : ' + userId.birthDate
+            p= 'Taille : ' + userId.height + ' cm'
+            p= 'Poids : ' + userId.weight + ' kg'
+            - if (userId.gender == 'M')
+                p= 'Sexe : Homme'
+            - else if (userId.gender == 'F')
+                p= 'Sexe : Femme'
+            - else
+                p= 'Sexe : Non renseigné'
+
+            a(href='/profilEdit') Modifier mon profil
+
             a(href='/') Retourner à l'accueil

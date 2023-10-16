@@ -2,13 +2,13 @@ var express = require('express');
 var session = require('express-session');
 var router = express.Router();
 var user_dao = require('../../sport-track-db/sport-track-db').user_dao;
-var socker;
+var socket;
 // Configuration du middleware express-session
 router.use(session({secret: 'votre-secret-secret'}));
 
 // GET /users
 router.get('/', async function(req, res, next) {
-    socker = req.session;
+    socket = req.session;
 
     try {
         res.render('users');
@@ -25,35 +25,52 @@ router.post('/', async function(req, res, next) {
         // Vérification que l'adresse e-mail de l'utilisateur est unique
         const existingUser = await user_dao.findByEmail(userData.email);
         if (existingUser) {
-            return res.status(400).send('L\'adresse e-mail est déjà utilisée.');
+            res.redirect('/not_unique_email');
+            return;
         }
 
         // Création de l'utilisateur en utilisant la classe UserDAO
         try {
-            await user_dao.insert(userData);
-            // res.status(201).send(`Utilisateur créé avec l'ID avec succès`);
-            try {
-                // Vérification des informations de connexion
-                const user = await user_dao.findByEmail(userData.email);
-                if (!user) {
-                    return res.status(400).send("L'adresse e-mail est incorrecte.");
-                }
+            // si le mot de passe fais moins de 6 caractères on renvoie une erreur
+            if (userData.password.length < 6) {
+                res.redirect('/password_too_short');
+            }
 
-                const userId = await user_dao.connectUserByEmail(user.email, user.password);
-                if (!userId) {
-                    return res.status(400).send('Le mot de passe est incorrect.');
-                } else {
-                    // Stockage de l'ID utilisateur dans la session
-                    socket.userId = userId;
-                    res.redirect('/');
-                }
+            // si l'adresse mail ne contient ni @ ni . on renvoie une erreur
+            if (!userData.email.includes('@') || !userData.email.includes('.')) {
+                res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur mail');
+            }
+
+            // On crée le nouvel objet utilisateur
+            const User = {
+                email: userData.email,
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                birthDate: userData.birthDate,
+                height: userData.height,
+                weight: userData.weight,
+                gender: userData.gender,
+                password: userData.password
+            };
+
+            // On ajoute l'utilisateur
+            try {
+                await user_dao.insert(User);
+                // On recupere l'id de l'utilisateur pour le mettre dans la session
+                const user = await user_dao.findByEmail(userData.email);
+                
+                // On met à jour les informations de session
+                socket.userId = user;
+
+                res.redirect('/');
             } catch (error) {
                 console.error(error);
-                res.status(500).send('Erreur lors de la tentative de connexion');
+                res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur1');
             }
+            
         } catch (error) {
             console.error(error);
-            res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur');
+            res.status(500).send('Erreur lors de l\'ajout de l\'utilisateur2');
         }
     } catch (error) {
         console.error(error);

@@ -6,8 +6,39 @@ block content
         a(href='/')
             img(src='../img/sporttrack.png', alt='SportTrack Logo')
         a(href='upload') AJOUTER UN FICHIER
-        a(href='activities') MES ACTIVITÉS
+        a.myaccount(href='myaccount') MON COMPTE
       
     body
         .information
-            h1 Mes informations
+            h1 Modifier mes informations
+            
+            form(method='post')
+                div
+                    label(for='lastName') Nom :
+                    input#lastName(type='text' name='lastName' value=userId.lastName required='')
+                div
+                    label(for='firstName') Prénom :
+                    input#firstName(type='text' name='firstName' value=userId.firstName required='')
+                div
+                    label(for='email') Email :
+                    input#email(type='email' name='email' value=userId.email required='')
+                div
+                    label(for='birthDate') Date de naissance :
+                    input#birthDate(type='date' name='birthDate' value=userId.birthDate required='')
+                div
+                    label(for='height') Taille (cm) :
+                    input#height(type='number' name='height' value=userId.height required='')
+                div
+                    label(for='weight') Poids (kg) :
+                    input#weight(type='number' name='weight' value=userId.weight required='')
+                div
+                    label(for='gender') Votre sexe :
+                    select#sexe(name='gender' required='')
+                        option(value='' disabled='' hidden='') Cliquez pour répondre
+                        option(value='M', selected=userId.gender === 'M') Homme
+                        option(value='F', selected=userId.gender === 'F') Femme
+                        option(value='Other', selected=userId.gender === 'Other') Ne préfère pas répondre
+                
+                button(type='submit') Modifier mon profil
+            
+            a(href='/') Retour à l'accueil
